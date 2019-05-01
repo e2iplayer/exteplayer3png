@@ -21,6 +21,13 @@
 #include <stdlib.h>
 #include <png.h>
 
+const char my_interp[] __attribute__((section(".interp"))) = PROGRAM_INTERPRETER;
+
+extern int GetVersion(void)
+{
+    return 1;
+}
+
 extern int SaveRGBAImage(const char *filename, unsigned char *data, int width, int height)
 {
     if (width <= 0 || height <= 0 || data == NULL || filename == NULL) return -1;
@@ -68,4 +75,10 @@ faile1:
 
 faile0:
     return ret;
+}
+
+extern int entry()
+{
+   printf("exteplayer3 PNG plugin v%d\n", GetVersion());
+   exit(0);
 }
